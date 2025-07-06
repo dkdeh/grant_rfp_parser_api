@@ -59,3 +59,24 @@ async def summarize_rfp(file: UploadFile = File(...)):
 
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
+from fastapi import FastAPI, UploadFile, File, HTTPException
+import traceback
+
+@app.post("/summarize-rfp")
+async def summarize_rfp(file: UploadFile = File(...)):
+    try:
+        print("✅ Received file:", file.filename)
+        content = await file.read()
+
+        # Decode the uploaded file to text
+        text = content.decode("utf-8", errors="ignore")
+        print("✅ Text decoded. Preview:")
+        print(text[:300])
+
+        # TEMP: Just return a placeholder summary
+        return {"summary": "✅ This is a test summary placeholder."}
+
+    except Exception as e:
+        print("❌ Internal Server Error during summarization:")
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail="Internal server error")
