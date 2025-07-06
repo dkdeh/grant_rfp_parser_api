@@ -80,3 +80,4 @@ async def summarize_rfp(file: UploadFile = File(...)):
         print("❌ Internal Server Error during summarization:")
         traceback.print_exc()
         raise HTTPException(status_code=500, detail="Internal server error")
+Add debug logs to summarize-rfp route
